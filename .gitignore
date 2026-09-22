@@ -1,0 +1,15 @@
+# Arduino build artifacts
+build/
+*.bin
+*.elf
+*.map
+*.hex
+
+# Editors / OS
+.DS_Store
+.vscode/
+.idea/
+*.swp
+
+# Local secrets (students: never commit real Wi-Fi passwords)
+tasks/**/secrets.h
