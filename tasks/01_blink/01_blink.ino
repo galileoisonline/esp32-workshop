@@ -10,8 +10,8 @@
  * Line to edit: BLINK_MS below. Make it 100 or 2000, click Upload again,
  * and watch the rate change.
  *
- * If nothing lights up: your board is the v1.1 revision. In config.h change
- * LED_PIN from 48 to 38 and upload again.
+ * If nothing lights up: your board is the original revision. In config.h
+ * change LED_PIN from 38 to 48 and upload again.
  *
  * Concepts: setup() runs once, loop() runs forever, delay() pauses the
  * program. A plain LED is driven with digitalWrite(); this board's RGB LED

@@ -133,7 +133,7 @@ Check: a port appears when the board is plugged in and vanishes when unplugged. 
    Writing at 0x00010000... (100 %)
    Hard resetting via RTS pin...
    ```
-5. Check: the small RGB LED next to the red power LED blinks white once per second. On **ESP32S3 Dev Module**, `LED_BUILTIN` maps to the RGB LED on **GPIO 48**, which is where the LED is on the original DevKitC-1. On the **v1.1** board the LED is on GPIO 38, so the stock Blink example lights nothing; that is not a fault. The workshop code reads the pin from `LED_PIN` in `config.h` (48 by default; change it to 38 if Task 1 lights nothing).
+5. Check: the small RGB LED next to the red power LED blinks white once per second. On **ESP32S3 Dev Module**, `LED_BUILTIN` maps to the RGB LED on **GPIO 48**, which is where the LED is on the original DevKitC-1. On the **v1.1** board the LED is on GPIO 38, so the stock Blink example lights nothing; that is not a fault. The workshop code reads the pin from `LED_PIN` in `config.h` (38 by default, matching v1.1; change it to 48 if Task 1 lights nothing).
 
 ### If the upload hangs at `Connecting......_____....._____`
 

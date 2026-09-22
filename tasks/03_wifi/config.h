@@ -21,10 +21,10 @@
 // ---------------------------------------------------------------------------
 
 // The DevKitC-1 has no plain LED. It has an addressable RGB LED (WS2812 type)
-// controlled through ONE data pin: GPIO 48 on the original board, GPIO 38 on
-// v1.1. Both are sold and look the same. If nothing lights up in Task 1,
-// change 48 to 38.
-#define LED_PIN 48
+// controlled through ONE data pin: GPIO 38 on the v1.1 board (the common one
+// now), GPIO 48 on the original. Both are sold and look the same. If nothing
+// lights up in Task 1, change 38 to 48.
+#define LED_PIN 38
 
 // 1 = LED_PIN drives an addressable RGB LED (rgbLedWrite).
 // 0 = LED_PIN drives a plain LED (digitalWrite), like on a classic ESP32 DevKit.

@@ -78,7 +78,7 @@ tasks/04_web_dashboard/
 ```
 
 - **`config.h`** is the only file you need to edit to adapt to a different board:
-  `BOARD_NAME`, `LED_PIN` (48; 38 on v1.1 boards), `LED_IS_RGB` (1), `LED_BRIGHTNESS` (40),
+  `BOARD_NAME`, `LED_PIN` (38; 48 on original-revision boards), `LED_IS_RGB` (1), `LED_BRIGHTNESS` (40),
   `BUTTON_PIN` (0), `TOUCH_PIN` (T4 = GPIO 4), `SERIAL_BAUD` (115200), `AP_PASSWORD`
   (`hackhardware`), `USE_STATION_MODE` (0 = the board runs its own Wi-Fi network, 1 = it
   joins `WIFI_SSID`/`WIFI_PASS`, for example your phone's hotspot).
@@ -96,7 +96,7 @@ The code assumes an ESP32-S3-DevKitC-1. Constants are in `config.h` if yours dif
 
 | Part | Where | Notes |
 |---|---|---|
-| RGB LED | GPIO 48 (original) or GPIO 38 (v1.1) | `LED_PIN`. One addressable WS2812-type LED, driven with `rgbLedWrite(LED_PIN, r, g, b)`; no plain LED. Both board versions look the same: if nothing lights, change 48 to 38. The red LED next to it is power, always on. |
+| RGB LED | GPIO 38 (v1.1, the default) or GPIO 48 (original) | `LED_PIN`. One addressable WS2812-type LED, driven with `rgbLedWrite(LED_PIN, r, g, b)`; no plain LED. Both board versions look the same: if nothing lights, change 48 to 38. The red LED next to it is power, always on. |
 | BOOT button | GPIO 0 | `BUTTON_PIN`. Reads `LOW` when pressed. Hold it during **Upload** if the IDE is stuck on `Connecting...`. |
 | RST button | – | Resets the chip. |
 | Touch pad | GPIO 4 (`T4`) | Header pin labelled 4, left side. Touch the pin or a jumper wire plugged into it. The value **rises** when touched. |

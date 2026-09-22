@@ -19,7 +19,7 @@ Print uptime, temperature, touch and button state to the Serial Monitor once a s
 5. Press the **BOOT** button on the board once. You should see `EVENT button pressed` and the LED stops
    blinking. Press again and it resumes. Hold the button down: it fires only once per press.
 6. Touch the bare header pin labelled **4** (left side, fourth from the top) with a fingertip and watch `touch=`
-   rise from roughly 20000-30000 to 40000 or more. (On the classic ESP32 the value drops when touched; on the S3
+   rise from roughly 10000-30000 to well above that (about double). (On the classic ESP32 the value drops when touched; on the S3
    it rises.) Exact numbers vary from board to board.
 7. Look at `updateLed()`: there is no `delay()` anywhere. Change `BLINK_MS` to `100` and upload again. The
    status line still arrives exactly once a second. That is the point of `millis()`.

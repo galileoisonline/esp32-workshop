@@ -7,7 +7,7 @@
  * What to look for: Serial Monitor (115200 baud) prints a line like
  *     t=12.3s temp=41.2C touch=57 button=0 led=1
  * every second. Press BOOT and you get "EVENT button pressed".
- * Touch the pin labelled 4 (T0) and the touch value drops.
+ * Touch the pin labelled 4 and the touch value jumps up.
  *
  * Lines to edit: BLINK_MS (blink speed) and REPORT_MS (how often to print).
  *
@@ -39,6 +39,7 @@ unsigned long lastButtonChangeAt = 0;
 void setup() {
   Serial.begin(SERIAL_BAUD);
   delay(300);
+  touchRead(TOUCH_PIN);        // first touch reading is garbage while the sensor calibrates; discard it
   printBanner();
 
 #if !LED_IS_RGB
@@ -139,5 +140,5 @@ void printBanner() {
   Serial.print("[");
   Serial.print(BOARD_NAME);
   Serial.println("] Task 2: serial and button");
-  Serial.println("Press BOOT to start/stop blinking. Touch pin 4 (T0) to change the touch value.");
+  Serial.println("Press BOOT to start/stop blinking. Touch pin 4 to change the touch value.");
 }

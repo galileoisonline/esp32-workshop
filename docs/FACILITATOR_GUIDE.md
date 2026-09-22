@@ -6,8 +6,8 @@ You can run this workshop having never seen the material before. Read section 1 
 
 - The shape of it. Each participant's ESP32 board goes from a blinking LED, to printing its status over serial, to hosting its own Wi-Fi network, to a web page on the participant's phone that shows the board's status and controls the LED. Fast finishers make boards talk to each other over ESP-NOW.
 - Five tasks, one folder each under `tasks/`. Participants open the `.ino`, upload it, watch it work, then edit one clearly marked line or block. All shared settings (`BOARD_NAME`, `LED_PIN`, `AP_PASSWORD`, and so on) live in `config.h` next to each sketch.
-- The boards are **ESP32-S3-DevKitC-1** (Espressif's official S3 board). Two things about it every helper must know: it has two USB-C connectors, labelled UART and USB, and students must use **UART** (the USB one uploads but shows no Serial output); and its LED is an addressable RGB LED on GPIO 48 on the original board or GPIO 38 on v1.1, and both versions are in the room and look identical. If nothing lights, `LED_PIN 38` in `config.h`.
-- No extra hardware, no internet dependency. Everything uses what is on the board (RGB LED on GPIO 48/38, BOOT button on GPIO 0, internal temperature sensor, touch pin GPIO 4, Wi-Fi). The board hosts its own Wi-Fi network (named `BOARD_NAME`, password `hackhardware`, page at `http://192.168.4.1`). Never rely on campus Wi-Fi.
+- The boards are **ESP32-S3-DevKitC-1** (Espressif's official S3 board). Two things about it every helper must know: it has two USB-C connectors, labelled UART and USB, and students must use **UART** (the USB one uploads but shows no Serial output); and its LED is an addressable RGB LED on GPIO 38 (v1.1, what our boards are and the default in `config.h`) or GPIO 48 on the original revision; both look identical. If nothing lights, `LED_PIN 48` in `config.h`.
+- No extra hardware, no internet dependency. Everything uses what is on the board (RGB LED on GPIO 38 (48 on original-revision boards), BOOT button on GPIO 0, internal temperature sensor, touch pin GPIO 4, Wi-Fi). The board hosts its own Wi-Fi network (named `BOARD_NAME`, password `hackhardware`, page at `http://192.168.4.1`). Never rely on campus Wi-Fi.
 - The four things that eat time: (1) laptops that cannot see the board: charge-only cables, CP210x driver; (2) cable in the USB connector instead of UART: upload works, Serial Monitor empty; (3) `Wrong boot mode`: hold BOOT during upload; (4) phones that will not open the page: turn off mobile data, use `http://`. Every helper must know these cold. They are in `docs/TROUBLESHOOTING.md`.
 - Your job during the event is pacing, not debugging. Helpers debug. You watch the clock, call checks, and cut scope using the rules in section 4.
 - Definition of success: every participant turns their LED on and off from their phone (the Task 4 check). Everything after that is a bonus.
@@ -115,7 +115,7 @@ Talking points
 
 - A microcontroller runs one program, forever, from power-on. No OS, no windows, no "quit".
 - `setup()` once, `loop()` forever. Every Arduino program is exactly this.
-- `digitalWrite(pin, HIGH)` puts 3.3 V on a pin. This board's LED is different: an addressable RGB LED with one data pin (GPIO 48, or 38 on v1.1), driven with `rgbLedWrite(LED_PIN, r, g, b)`. `setLed()` at the bottom of the sketch hides that. Brightness is the r, g, b values; `LED_BRIGHTNESS` in `config.h` is 40 because 255 hurts.
+- `digitalWrite(pin, HIGH)` puts 3.3 V on a pin. This board's LED is different: an addressable RGB LED with one data pin (GPIO 38, or 48 on the original revision), driven with `rgbLedWrite(LED_PIN, r, g, b)`. `setLed()` at the bottom of the sketch hides that. Brightness is the r, g, b values; `LED_BRIGHTNESS` in `config.h` is 40 because 255 hurts.
 - `delay()` freezes everything. Fine here; Task 2 fixes it.
 - "Changing one number and uploading again is most of embedded programming."
 
@@ -141,7 +141,7 @@ Talking points
 - `millis()` is a stopwatch since boot. "If enough time has passed, do the thing" instead of `delay()`. This is the single most important habit in the workshop.
 - `temperatureRead()` is the chip's internal die temperature. It is rough (plus or minus 5 C) and reads warm. It is still a sensor.
 
-Demo. Open the Serial Monitor, the status line ticks every second. Press BOOT: `EVENT button pressed`, blinking stops. Touch GPIO 4 with a finger (left header, fourth pin from the top): `touch=` rises from roughly 25000 to 40000 or more. Say it: on the S3 the touch value goes up, not down like the classic ESP32; students who read older tutorials will expect a drop. Then **Tools > Serial Plotter** on the touch value: a live graph of a finger.
+Demo. Open the Serial Monitor, the status line ticks every second. Press BOOT: `EVENT button pressed`, blinking stops. Touch GPIO 4 with a finger (left header, fourth pin from the top): `touch=` roughly doubles (this board idles near 15000). Say it: on the S3 the touch value goes up, not down like the classic ESP32; students who read older tutorials will expect a drop. Then **Tools > Serial Plotter** on the touch value: a live graph of a finger.
 
 Stuck on, one-line fix
 
@@ -234,7 +234,7 @@ Check: two or more pages list each other. Everyone else is on `CHALLENGES.md` an
   1. No port?          Data cable. Direct USB. CP210x driver (SETUP section 1).
   2. Wrong boot mode?  Hold BOOT while "Connecting...". Or Upload Speed 115200.
   3. No page?          Mobile data off. http://192.168.4.1 (not https). Joined your own board's network?
-  Brownout: cable/port.   LED dark: LED_PIN 38 (v1.1 board).   Garbage: 115200.   Touch goes UP on the S3.
+  Brownout: cable/port.   LED dark: LED_PIN 48 (original-revision board).   Garbage: 115200.   Touch goes UP on the S3.
   ```
 - During the setup check, helpers walk their pods and confirm each cable is in the UART connector and each laptop shows a port. Anyone without one gets the USB stick and one-to-one attention immediately; do not let it wait.
 - During tasks, helpers watch for the check, not for hands. Hands come up late. Someone staring at a static screen for 2 minutes is stuck.

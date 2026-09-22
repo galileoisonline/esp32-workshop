@@ -74,6 +74,7 @@ unsigned long lastButtonChangeAt = 0;
 void setup() {
   Serial.begin(SERIAL_BAUD);
   delay(300);
+  touchRead(TOUCH_PIN);        // first touch reading is garbage while the sensor calibrates; discard it
   printBanner();
 #if !LED_IS_RGB
   pinMode(LED_PIN, OUTPUT);   // plain LED only; rgbLedWrite() sets its own pin up
@@ -281,6 +282,7 @@ void runPattern() {
 void setPattern(Pattern p) {
   pattern = p; sosStep = 0; sosStepAt = millis(); lastBlinkAt = millis();
   if (p == SOS) setLed(SOS_STEPS[0].on);
+  if (p == OFF) setLed(false);   // reflect the change right away, not on the next blink tick
 }
 void setLedEnabled(bool on) {
   if (on && pattern == OFF) setPattern(BLINK);

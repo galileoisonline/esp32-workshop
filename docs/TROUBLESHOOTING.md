@@ -17,7 +17,7 @@ Find your symptom in the table. The most common ones have longer sections below.
 | `Failed to connect to ESP32-S3: No serial data received.` | Wrong port selected, board unpowered, another program holding the port | Pick the right port. Close other serial programs. Then the BOOT trick. |
 | Upload starts, dies mid-way (`Timed out waiting for packet header`, `Serial data stream stopped`) | Flaky cable, hub, or high baud | **Tools > Upload Speed > 115200**. Direct USB port. |
 | `Brownout detector was triggered` in Serial Monitor, board resets over and over | Not enough power over USB | Different cable, USB port, no hub. See [Brownout](#3-brownout-detector-was-triggered). |
-| Upload OK, LED never lights | Board is the v1.1 revision: RGB LED on GPIO 38, not 48 | `LED_PIN 38` in `config.h`. See [LED](#5-led-does-not-light). |
+| Upload OK, LED never lights | Board is the original revision: RGB LED on GPIO 48, not 38 | `LED_PIN 48` in `config.h`. See [LED](#5-led-does-not-light). |
 | Garbage or `???` in Serial Monitor | Baud mismatch | Serial Monitor dropdown to 115200. |
 | Serial Monitor empty | Cable in the **USB** connector, wrong port, board not running | Cable to **UART**. Press RST on the board. Confirm the port. Check baud. |
 | Serial Monitor shows `ESP-ROM:esp32s3-...`, `rst:0x1 (POWERON)` and some hex lines every time | Normal boot log | Not an error. Opening the monitor reboots the board. |
@@ -42,7 +42,7 @@ Find your symptom in the table. The most common ones have longer sections below.
 | macOS: two ports for one board (`cu.usbserial-...` and `cu.SLAB_USBtoUART`) | Apple driver and the Silicon Labs driver both installed | Try the other port. Long-term: remove old `/Library/Extensions/usbserial.kext`, reboot. |
 | Windows: Unknown device in Device Manager | Driver not fetched by Windows Update | Install the CP210x driver (SETUP.md section 1). |
 | `touchRead` gives 0 or a constant | Wrong pin | `TOUCH_PIN` must be a touch-capable pin: T1-T14 = GPIO 1-14 on the S3. The workshop uses T4 = GPIO 4. |
-| Touch value does not drop when touched | On the S3 it rises | Normal. Untouched is roughly 20000-30000, touched 40000+. Watch for a rise, not a drop. |
+| Touch value does not drop when touched | On the S3 it rises | Normal. Untouched is roughly 10000-30000, touched about double that. Watch for a rise, not a drop. |
 | `analogRead` returns 0 or 4095 while Wi-Fi is on | Pin is on ADC2 (GPIO 11-20) | Use an ADC1 pin: GPIO 1-10. |
 
 ## 0. Two USB-C connectors: use UART
@@ -132,11 +132,11 @@ Checklist, in order:
 Upload said `Hard resetting via RTS pin...` and Serial prints the banner, but no light.
 
 1. Find the LED. The DevKitC-1 has two: a red one = power (always on, not controllable) and a small white square next to it = the addressable RGB LED (yours). There is no plain blue LED like on the classic DevKit.
-2. Check the board version. The RGB LED is on **GPIO 48** on the original board and **GPIO 38** on v1.1. Both are in the room and look the same. Open `config.h` and change
+2. Check the board version. The RGB LED is on **GPIO 38** on the v1.1 board (the default in `config.h`, and what our boards are) and **GPIO 48** on the original. Both are in the room and look the same. Open `config.h` and change
    ```cpp
-   #define LED_PIN 48
+   #define LED_PIN 38
    ```
-   to `38` (or back to `48`), upload again. One of the two works.
+   to `48` (or back to `38`), upload again. One of the two works.
 3. The stock **File > Examples > 01.Basics > Blink** only knows GPIO 48 (`LED_BUILTIN`), so on a v1.1 board it lights nothing even though the board is fine. Use the workshop's Task 1 with `LED_PIN 38` instead.
 4. Still dark on both pins? Confirm `LED_IS_RGB` is `1` in `config.h` and `LED_BRIGHTNESS` is not `0`. `digitalWrite` and `analogWrite` do nothing useful on this LED; it needs `rgbLedWrite(LED_PIN, r, g, b)`.
 5. Need a plain LED anyway (for a challenge)? Borrow a jumper wire, an LED and a 220 ohm resistor from the helper table: a free GPIO (for example 5) to resistor to LED long leg; LED short leg to GND. Drive it with `pinMode`/`digitalWrite`.

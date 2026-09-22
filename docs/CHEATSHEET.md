@@ -1,6 +1,6 @@
 # ESP32-S3 cheat sheet (ESP32-S3-DevKitC-1, Arduino IDE 2, esp32 core 3.3.x)
 
-Board facts: RGB LED on GPIO 48 (original) or 38 (v1.1), `rgbLedWrite` only. BOOT button GPIO 0 (pressed = LOW). RST button resets. Touch T4 = GPIO 4, value rises when touched. Two USB-C connectors: use **UART** (the **USB** one uploads but shows no Serial). 3.3 V max on any pin, never 5 V. Wi-Fi 2.4 GHz only. Access-point IP 192.168.4.1. Serial 115200 on GPIO 43/44.
+Board facts: RGB LED on GPIO 38 (v1.1) or 48 (original), `rgbLedWrite` only. BOOT button GPIO 0 (pressed = LOW). RST button resets. Touch T4 = GPIO 4, value rises when touched. Two USB-C connectors: use **UART** (the **USB** one uploads but shows no Serial). 3.3 V max on any pin, never 5 V. Wi-Fi 2.4 GHz only. Access-point IP 192.168.4.1. Serial 115200 on GPIO 43/44.
 
 Upload stuck at `Connecting...`? Hold BOOT. Still failing? **Tools > Upload Speed > 115200**. Garbage in Serial? Set 115200. Serial empty? Cable to the UART connector.
 
@@ -43,7 +43,7 @@ ledcAttach(5, 5000, 8);  ledcWrite(5, 64);    // explicit PWM: 5 kHz, 8-bit; dut
 // ---- Analog, touch, temperature ----------------------------------------
 int   raw   = analogRead(5);         // 0-4095 (12-bit), GPIO 1-10 when Wi-Fi is on
 float volts = analogReadMilliVolts(5) / 1000.0;
-uint32_t t  = touchRead(TOUCH_PIN);  // S3: roughly 20000-30000 idle, RISES to 40000+ when touched (varies)
+uint32_t t  = touchRead(TOUCH_PIN);  // S3: roughly 10000-30000 idle, RISES to about double that when touched (varies)
 float tempC = temperatureRead();     // chip die temperature, C, rough (reads 5-10 C warm). hallRead() no longer exists.
 
 // ---- Timing: the millis() pattern (never delay() once Wi-Fi is on) -----

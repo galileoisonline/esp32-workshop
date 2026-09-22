@@ -14,7 +14,7 @@ Make the onboard RGB LED blink, then change how fast it blinks.
 1. In Arduino IDE 2 open **File > Open...** and pick `tasks/01_blink/01_blink.ino`.
    The IDE opens two tabs: `01_blink.ino` and `config.h`.
 2. Click the `config.h` tab. Change `#define BOARD_NAME "ESP32-1"` to a name of your own
-   (letters, digits, dashes; max 11 characters). Leave `LED_PIN 48` for now (see step 7 if nothing lights).
+   (letters, digits, dashes; max 11 characters). Leave `LED_PIN 38` for now (see step 7 if nothing lights).
 3. Plug the cable into the USB-C connector labelled **UART** on the board, not the one labelled **USB**.
    Select the board: **Tools > Board > esp32 > ESP32S3 Dev Module**.
    Select the port: **Tools > Port**, the one that looks like `/dev/cu.usbserial-...`, `/dev/cu.SLAB_USBtoUART` or `COMx`.
@@ -25,8 +25,8 @@ Make the onboard RGB LED blink, then change how fast it blinks.
 6. Open the **Serial Monitor** (magnifying-glass icon, top-right) and set the baud dropdown to **115200**.
    You should see `[ESP32-1] Task 1: blink` (with your name) followed by `led on` / `led off` lines.
 7. Look at the board. The LED that blinks is a small white square next to the always-on red power LED.
-   If it never lights but the Serial Monitor shows `led on` / `led off`, your board is the v1.1 revision:
-   in `config.h` change `LED_PIN 48` to `LED_PIN 38` and upload again.
+   If it never lights but the Serial Monitor shows `led on` / `led off`, your board is the original revision:
+   in `config.h` change `LED_PIN 38` to `LED_PIN 48` and upload again.
 8. In `01_blink.ino` find `const unsigned long BLINK_MS = 500;`. Change `500` to `100`, click **Upload**
    again, and watch the LED speed up. Try `2000`.
 

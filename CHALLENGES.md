@@ -24,7 +24,7 @@ Done when: you and a neighbour have compared best times. Under 200 ms is very go
 
 Goal: the harder your finger presses the touch pin, the brighter the LED (or the more its colour shifts).
 Start from: `02_serial_button`
-Hint: `touchRead(TOUCH_PIN)` is roughly 20000-30000 untouched and rises to 40000+ when touched on the S3 (print yours to find the range). `int b = map(t, 25000, 45000, 0, 255); b = constrain(b, 0, 255); rgbLedWrite(LED_PIN, b, b, b);`. Replace the blink with this in `loop()`. For colour instead: `rgbLedWrite(LED_PIN, b, 0, 255 - b)` goes from blue to red. `analogWrite` does not work on this LED.
+Hint: `touchRead(TOUCH_PIN)` is roughly 10000-30000 untouched and rises to about double that when touched on the S3 (print yours to find the range). `int b = map(t, 25000, 45000, 0, 255); b = constrain(b, 0, 255); rgbLedWrite(LED_PIN, b, b, b);`. Replace the blink with this in `loop()`. For colour instead: `rgbLedWrite(LED_PIN, b, 0, 255 - b)` goes from blue to red. `analogWrite` does not work on this LED.
 Done when: touching lightly gives a dim LED, pressing firmly gives full brightness (or a clearly different colour).
 
 ### 4. Open the page by name
